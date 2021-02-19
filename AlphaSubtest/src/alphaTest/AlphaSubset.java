@@ -1,16 +1,17 @@
 package alphaTest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AlphaSubset {
   private String mPhrase;
   private ArrayList<Character> mSubset;
-  private char[] validChars= {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+  private ArrayList<Character> valid = new ArrayList<Character>(Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
                                 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
                                 'y', 'z', ' ', '!', '\"', '#', '$', '%', '&', '\'', '(', ')',
-                                '*', ',', '-', '.', ':', ';', '?', '@'};
-  
+                                '*', ',', '-', '.', ':', ';', '?', '@'));
   public AlphaSubset (String phrase) {
+    
     if (this.validate()) {
       mPhrase = phrase;
     }
@@ -45,10 +46,14 @@ public class AlphaSubset {
     if (mPhrase.isEmpty() || mPhrase.isBlank()) {
       return false;
     }
+    mPhrase.toLowerCase();
     char[] mChars = mPhrase.toCharArray();
     for (int i = 0; i < mChars.length; i++) {
-      char current = mChars[i];
+      Character current = mChars[i];
+      if (!valid.contains(current)) {
+        return false;
+      }
     }
-    return false;
+    return true;
   }
 }
