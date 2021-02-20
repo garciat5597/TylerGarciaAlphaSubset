@@ -2,6 +2,7 @@ package alphaTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class AlphaSubset {
   private String mPhrase;
@@ -11,8 +12,8 @@ public class AlphaSubset {
                                 'y', 'z', ' ', '!', '\"', '#', '$', '%', '&', '\'', '(', ')',
                                 '*', ',', '-', '.', ':', ';', '?', '@'));
   public AlphaSubset (String phrase) {
-    
-    if (this.validate()) {
+    mSubset = new ArrayList<Character>();
+    if (this.validate(phrase)) {
       mPhrase = phrase;
     }
     else {
@@ -41,19 +42,26 @@ public class AlphaSubset {
     return mSubset;
   }
   
-  public boolean validate () {
+  public boolean validate (String phrase) {
     // Check for empty phrase immediately
-    if (mPhrase.isEmpty() || mPhrase.isBlank()) {
+    if (phrase.isEmpty()) {
       return false;
     }
-    mPhrase.toLowerCase();
-    char[] mChars = mPhrase.toCharArray();
+    phrase = phrase.toLowerCase();
+    char[] mChars = phrase.toCharArray();
+    // Determine if each character is valid and if it is in the subset
+    
     for (int i = 0; i < mChars.length; i++) {
       Character current = mChars[i];
-      if (!valid.contains(current)) {
+      if (!(valid.contains(current))) {
+        mSubset.clear();
         return false;
       }
+      if (!(mSubset.contains(current))) {
+        mSubset.add(current);
+      }
     }
+    Collections.sort(mSubset);
     return true;
   }
 }
