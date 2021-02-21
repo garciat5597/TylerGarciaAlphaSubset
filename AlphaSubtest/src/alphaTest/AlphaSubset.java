@@ -38,6 +38,11 @@ public class AlphaSubset {
     return mPhrase;
   }
   
+  public ArrayList<Character> getValidChars () {
+    Collections.sort(valid);
+    return valid;
+  }
+  
   public ArrayList<Character> getSubset () {
     return mSubset;
   }
@@ -47,21 +52,29 @@ public class AlphaSubset {
     if (phrase.isEmpty()) {
       return false;
     }
-    phrase = phrase.toLowerCase();
-    char[] mChars = phrase.toCharArray();
-    // Determine if each character is valid and if it is in the subset
-    
-    for (int i = 0; i < mChars.length; i++) {
-      Character current = mChars[i];
-      if (!(valid.contains(current))) {
-        mSubset.clear();
-        return false;
+    // Try / Catch to ensure project doesn't crash
+    try {
+      phrase = phrase.toLowerCase();
+      char[] mChars = phrase.toCharArray();
+      // Determine if each character is valid and if it is in the subset
+      
+      for (int i = 0; i < mChars.length; i++) {
+        Character current = mChars[i];
+        if (!(valid.contains(current))) {
+          mSubset.clear();
+          return false;
+        }
+        if (!(mSubset.contains(current))) {
+          mSubset.add(current);
+        }
       }
-      if (!(mSubset.contains(current))) {
-        mSubset.add(current);
-      }
+      Collections.sort(mSubset);
+      return true;
     }
-    Collections.sort(mSubset);
-    return true;
+    catch (Exception e){
+      mSubset.clear();
+      return false;
+    }
+    
   }
 }
